@@ -21,9 +21,6 @@ function semverCompare(a, b) {
     return 0;
 };
 
-// https://semver.org
-const SEMVER_REGEX = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/;
-
 // Input parameters. See action.yaml
 const { INPUT_PATH, INPUT_TOKEN, INPUT_FORMAT } = process.env;
 
@@ -56,9 +53,7 @@ if (base.name == head.name) {
     process.exit(1);
   }
 
-  const from = base.version.match(SEMVER_REGEX);
-  const to = head.version.match(SEMVER_REGEX);
-  const versionDiffResult = semverCompare(from, to);
+  const versionDiffResult = semverCompare(base.version, head.version);
 
   if (versionDiffResult === 1 || versionDiffResult === 0) {
     console.log(
